@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Francisco Obaya — Analytics Translator & Builder Digital</title>
+<meta name="description" content="Francisco Obaya — Analytics Translator en Acid Labs. Puente entre el negocio y la tecnología. Lic. en Sistemas, UBA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #0f0f18;
+  --bg3: #14141f;
+  --surface: #1a1a28;
+  --surface2: #202030;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #f0eff8;
+  --text2: #a09eb8;
+  --text3: #5c5a7a;
+  --accent: #6c63ff;
+  --accent2: #9d97ff;
+  --accent3: #c8c5ff;
+  --green: #00d4aa;
+  --amber: #f59e0b;
+  --font-d: 'Syne', sans-serif;
+  --font-b: 'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.7;overflow-x:hidden}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:.4;
+}
+
+.gb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.gb1{width:550px;height:550px;background:#6c63ff;top:-160px;right:-60px;opacity:.1}
+.gb2{width:460px;height:460px;background:#00d4aa;bottom:20%;left:-120px;opacity:.07}
+.gb3{width:300px;height:300px;background:#6c63ff;bottom:5%;right:15%;opacity:.055}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:20px 52px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(10,10,15,.82);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  transition:background .3s;
+}
+.nav-logo{font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em}
+.nav-logo em{color:var(--accent2);font-style:normal}
+.nav-links{display:flex;gap:34px;list-style:none;align-items:center}
+.nav-links a{font-size:13.5px;color:var(--text2);text-decoration:none;transition:color .2s;letter-spacing:.01em}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent)!important;color:#fff!important;padding:8px 20px!important;border-radius:7px;font-weight:500!important;transition:opacity .2s!important}
+.nav-cta:hover{opacity:.88}
+.nav-ham{display:none;background:none;border:1px solid var(--border2);color:var(--text2);padding:7px 11px;border-radius:6px;cursor:pointer;font-size:17px;font-family:var(--font-b)}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;align-items:center;position:relative;
+  padding:150px 52px 90px;max-width:1300px;margin:0 auto;z-index:2;
+}
+.hero-content{max-width:700px}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(108,99,255,.11);border:1px solid rgba(108,99,255,.28);
+  border-radius:100px;padding:6px 16px;font-size:12.5px;color:var(--accent3);
+  margin-bottom:30px;animation:fadeUp .55s ease both;
+}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2.2s infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.35)}}
+
+.hero-name{
+  font-family:var(--font-d);font-size:clamp(54px,7.5vw,92px);font-weight:800;
+  line-height:.97;letter-spacing:-.045em;color:var(--text);margin-bottom:6px;
+  animation:fadeUp .55s .08s ease both;
+}
+.hero-name .hi{color:var(--accent2)}
+
+.hero-role{
+  font-family:var(--font-d);font-size:clamp(20px,2.8vw,30px);font-weight:500;
+  color:var(--text2);letter-spacing:-.02em;margin-bottom:30px;
+  animation:fadeUp .55s .16s ease both;
+}
+
+.hero-desc{
+  font-size:17.5px;font-weight:300;color:var(--text2);line-height:1.75;
+  max-width:540px;margin-bottom:46px;animation:fadeUp .55s .24s ease both;
+}
+.hero-desc strong{color:var(--text);font-weight:500}
+
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .55s .32s ease both}
+
+.btn-p{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent);color:#fff;padding:13px 28px;border-radius:8px;
+  font-size:14.5px;font-weight:500;text-decoration:none;font-family:var(--font-b);
+  transition:background .2s,transform .2s;border:none;cursor:pointer;
+}
+.btn-p:hover{background:#8078ff;transform:translateY(-1px)}
+.btn-s{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--text2);padding:13px 26px;border-radius:8px;
+  font-size:14.5px;font-weight:400;text-decoration:none;border:1px solid var(--border2);
+  font-family:var(--font-b);transition:all .2s;cursor:pointer;
+}
+.btn-s:hover{color:var(--text);border-color:rgba(255,255,255,.22);background:var(--surface);transform:translateY(-1px)}
+
+.hero-stats{
+  display:flex;gap:52px;flex-wrap:wrap;
+  margin-top:68px;padding-top:40px;border-top:1px solid var(--border);
+  animation:fadeUp .55s .42s ease both;
+}
+.stat-num{font-family:var(--font-d);font-size:30px;font-weight:700;color:var(--text);letter-spacing:-.03em;line-height:1.1}
+.stat-num sup{color:var(--accent2);font-size:18px}
+.stat-lbl{font-size:12px;color:var(--text3);margin-top:3px}
+
+/* orbit decoration */
+.hero-orbit{
+  position:absolute;right:40px;top:50%;transform:translateY(-50%);
+  width:420px;height:420px;z-index:1;
+  animation:fadeIn 1.2s .5s ease both;pointer-events:none;
+}
+
+/* MARQUEE */
+.marquee-wrap{position:relative;z-index:2;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0;overflow:hidden}
+.marquee-track{display:flex;gap:52px;animation:marquee 28s linear infinite;width:max-content}
+.mitem{font-family:var(--font-d);font-size:11.5px;font-weight:600;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:14px}
+.mitem::before{content:'✦';color:var(--accent);font-size:9px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS COMMON */
+section{position:relative;z-index:2}
+.container{max-width:1300px;margin:0 auto;padding:0 52px}
+.sec-label{font-size:11.5px;font-weight:600;color:var(--accent2);letter-spacing:.16em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.sec-label::before{content:'';display:block;width:22px;height:1px;background:var(--accent2)}
+.sec-title{font-family:var(--font-d);font-size:clamp(30px,4vw,50px);font-weight:700;letter-spacing:-.035em;color:var(--text);line-height:1.08}
+.sec-title .dim{color:var(--text3)}
+.sec-header{margin-bottom:60px}
+
+/* ABOUT */
+#about{padding:120px 0;border-top:1px solid var(--border)}
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:start}
+.about-p{font-size:16.5px;color:var(--text2);font-weight:300;line-height:1.82;margin-bottom:22px}
+.about-p strong{color:var(--text);font-weight:500}
+
+.pillars{display:flex;flex-direction:column;gap:16px;margin-top:36px}
+.pillar{display:flex;align-items:flex-start;gap:16px;padding:18px 22px;background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:border-color .25s,background .25s}
+.pillar:hover{border-color:var(--border2);background:var(--surface2)}
+.p-icon{width:34px;height:34px;border-radius:8px;background:rgba(108,99,255,.13);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+.pillar h4{font-family:var(--font-d);font-size:14.5px;font-weight:600;color:var(--text);margin-bottom:3px}
+.pillar p{font-size:13px;color:var(--text3);line-height:1.55}
+
+.about-right{display:flex;flex-direction:column;gap:20px}
+.card-block{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 30px;position:relative;overflow:hidden}
+.card-block.at::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--green))}
+.card-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
+.edu-item{margin-bottom:20px}
+.edu-item:last-child{margin-bottom:0}
+.edu-school{font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.01em;margin-bottom:3px}
+.edu-degree{font-size:13.5px;color:var(--accent2);margin-bottom:2px}
+.edu-period{font-size:12px;color:var(--text3)}
+.edu-sep{border:none;border-top:1px solid var(--border);margin:18px 0}
+
+.cert-grid{display:flex;flex-direction:column;gap:10px}
+.cert-item{display:flex;align-items:center;gap:12px;padding:11px 13px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;transition:border-color .2s}
+.cert-item:hover{border-color:var(--border2)}
+.cert-bul{width:28px;height:28px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
+.cp{background:rgba(108,99,255,.15)}
+.cg{background:rgba(0,212,170,.12)}
+.ca{background:rgba(245,158,11,.12)}
+.cert-name{font-size:13px;font-weight:500;color:var(--text);line-height:1.3;margin-bottom:2px}
+.cert-org{font-size:11.5px;color:var(--text3)}
+.cert-yr{margin-left:auto;font-size:11px;color:var(--text3);background:var(--surface2);padding:2px 8px;border-radius:100px;border:1px solid var(--border);white-space:nowrap}
+
+/* EXPERIENCE */
+#experience{padding:120px 0;border-top:1px solid var(--border)}
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:0;top:10px;bottom:40px;width:1px;background:linear-gradient(to bottom,var(--accent) 0%,rgba(108,99,255,.08) 100%)}
+.tl-item{position:relative;padding-bottom:60px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-33px;top:8px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 0 3px rgba(108,99,255,.22)}
+.tl-dot.gd{background:var(--green);box-shadow:0 0 0 3px rgba(0,212,170,.18)}
+.tl-head{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-bottom:4px}
+.tl-company{font-family:var(--font-d);font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.02em}
+.tl-pill{font-size:11.5px;padding:3px 11px;border-radius:100px;border:1px solid var(--border);color:var(--text3);background:var(--surface)}
+.tl-pill.cur{color:var(--green);background:rgba(0,212,170,.08);border-color:rgba(0,212,170,.22)}
+.tl-role{font-size:15px;color:var(--accent2);margin-bottom:16px;font-weight:400}
+.tl-desc{font-size:15px;color:var(--text2);font-weight:300;line-height:1.75;max-width:680px;margin-bottom:20px}
+.tl-bullets{display:flex;flex-direction:column;gap:9px;margin-bottom:22px}
+.tl-bullet{display:flex;gap:10px;font-size:14px;color:var(--text2);line-height:1.6}
+.tl-bullet::before{content:'→';color:var(--accent2);flex-shrink:0;margin-top:1px}
+.tl-tags{display:flex;flex-wrap:wrap;gap:7px}
+.tl-tag{font-size:11.5px;color:var(--accent3);background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.16);padding:3px 10px;border-radius:100px}
+
+/* SKILLS */
+#skills{padding:120px 0;border-top:1px solid var(--border)}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.sk-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;transition:border-color .25s,transform .25s;position:relative;overflow:hidden}
+.sk-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at top left,rgba(108,99,255,.05) 0%,transparent 65%);pointer-events:none}
+.sk-card:hover{border-color:rgba(108,99,255,.28);transform:translateY(-2px)}
+.sk-icon{font-size:26px;margin-bottom:14px}
+.sk-title{font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--text);margin-bottom:7px;letter-spacing:-.01em}
+.sk-desc{font-size:12.5px;color:var(--text3);line-height:1.6;margin-bottom:18px}
+.sk-pills{display:flex;flex-wrap:wrap;gap:6px}
+.sk-pill{font-size:11px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);padding:3px 8px;border-radius:4px}
+
+/* APPROACH */
+#approach{padding:120px 0;border-top:1px solid var(--border)}
+.approach-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);border-radius:16px;overflow:hidden}
+.ap-step{background:var(--bg2);padding:36px 26px;transition:background .25s}
+.ap-step:hover{background:var(--surface)}
+.ap-num{font-family:var(--font-d);font-size:44px;font-weight:800;color:var(--border2);line-height:1;margin-bottom:20px;letter-spacing:-.04em}
+.ap-title{font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:-.01em}
+.ap-desc{font-size:13px;color:var(--text3);line-height:1.65}
+
+/* CONTACT */
+#contact{padding:120px 0 80px;border-top:1px solid var(--border);text-align:center}
+.contact-inner{max-width:620px;margin:0 auto}
+.contact-h{font-family:var(--font-d);font-size:clamp(36px,5.5vw,68px);font-weight:800;letter-spacing:-.045em;color:var(--text);line-height:1.0;margin-bottom:22px}
+.grad-text{background:linear-gradient(135deg,var(--accent2) 0%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.contact-sub{font-size:16.5px;color:var(--text2);font-weight:300;margin-bottom:48px;line-height:1.65}
+.contact-cards{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.cc{display:inline-flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:14px 22px;font-size:14.5px;color:var(--text2);text-decoration:none;transition:all .22s ease}
+.cc:hover{background:var(--surface2);border-color:rgba(255,255,255,.2);color:var(--text);transform:translateY(-2px)}
+.cc svg{width:17px;height:17px;flex-shrink:0}
+
+/* FOOTER */
+footer{position:relative;z-index:2;padding:28px 52px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:0 auto}
+.foot-l{font-size:13px;color:var(--text3)}
+.foot-l strong{color:var(--text2);font-weight:500}
+.foot-r{display:flex;gap:24px}
+.foot-link{font-size:13px;color:var(--text3);text-decoration:none;transition:color .2s}
+.foot-link:hover{color:var(--text2)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.09s}.d2{transition-delay:.18s}.d3{transition-delay:.27s}
+
+/* RESPONSIVE */
+@media(max-width:1040px){
+  nav,footer{padding-left:32px;padding-right:32px}
+  .hero{padding:150px 32px 80px}
+  .container{padding:0 32px}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+  .approach-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-orbit{display:none}
+}
+@media(max-width:720px){
+  nav{padding:16px 24px}
+  .nav-links{display:none}
+  .nav-ham{display:block}
+  .hero{padding:120px 24px 60px}
+  .container{padding:0 24px}
+  .hero-stats{gap:28px}
+  .skills-grid{grid-template-columns:1fr}
+  .approach-grid{grid-template-columns:1fr}
+  #about,#experience,#skills,#approach,#contact{padding:80px 0}
+  .contact-cards{flex-direction:column;align-items:center}
+  footer{flex-direction:column;gap:18px;text-align:center;padding:28px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="gb gb1"></div>
+<div class="gb gb2"></div>
+<div class="gb gb3"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#top" class="nav-logo">FO<em>.</em></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#experience">Experiencia</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#approach">Enfoque</a></li>
+    <li><a href="#contact" class="nav-cta">Contacto</a></li>
+  </ul>
+  <button class="nav-ham" onclick="toggleMenu()" aria-label="Menú">☰</button>
+</nav>
+
+<!-- HERO -->
+<div id="top" style="position:relative;z-index:2">
+<div class="hero">
+  <div class="hero-content">
+
+    <div class="hero-badge">
+      <span class="bdot"></span>
+      Disponible para nuevas oportunidades
+    </div>
+
+    <h1 class="hero-name">Francisco<br><span class="hi">Obaya</span></h1>
+    <p class="hero-role">Analytics Translator &amp; Builder Digital</p>
+
+    <p class="hero-desc">
+      Soy el <strong>puente entre el negocio y la tecnología</strong>. Traduzco datos complejos en decisiones claras, convierto problemas de negocio en soluciones analíticas y alineo equipos técnicos con los objetivos que realmente importan.
+    </p>
+
+    <div class="hero-actions">
+      <a href="mailto:francisco.obaya@gmail.com" class="btn-p">
+        Escribime
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 7.5h11M9 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/francisco-obaya-190142191/" target="_blank" rel="noopener" class="btn-s">
+        LinkedIn
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 1.5h10v10M11.5 1.5l-10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">4<sup>+</sup></div>
+        <div class="stat-lbl">Años en IT</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-lbl">Empresas distintas</div>
+      </div>
+      <div>
+        <div class="stat-num">5</div>
+        <div class="stat-lbl">Certificaciones</div>
+      </div>
+      <div>
+        <div class="stat-num">UBA</div>
+        <div class="stat-lbl">Lic. en Sistemas</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Decorative orbit -->
+  <div class="hero-orbit">
+    <svg viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="210" cy="210" r="170" stroke="rgba(108,99,255,0.07)" stroke-width="1"/>
+      <circle cx="210" cy="210" r="130" stroke="rgba(108,99,255,0.055)" stroke-width="1"/>
+      <circle cx="210" cy="210" r="90" stroke="rgba(108,99,255,0.04)" stroke-width="1"/>
+      <g transform="translate(168,54)">
+        <rect width="86" height="50" rx="9" fill="rgba(108,99,255,0.14)" stroke="rgba(108,99,255,0.38)" stroke-width="1"/>
+        <text x="43" y="29" font-family="Syne,sans-serif" font-size="10" fill="rgba(200,197,255,0.9)" text-anchor="middle" font-weight="700">NEGOCIO</text>
+      </g>
+      <g transform="translate(58,240)">
+        <rect width="86" height="50" rx="9" fill="rgba(0,212,170,0.1)" stroke="rgba(0,212,170,0.3)" stroke-width="1"/>
+        <text x="43" y="29" font-family="Syne,sans-serif" font-size="10" fill="rgba(0,212,170,0.9)" text-anchor="middle" font-weight="700">DATOS</text>
+      </g>
+      <g transform="translate(276,240)">
+        <rect width="86" height="50" rx="9" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.28)" stroke-width="1"/>
+        <text x="43" y="29" font-family="Syne,sans-serif" font-size="10" fill="rgba(245,158,11,0.85)" text-anchor="middle" font-weight="700">TECH</text>
+      </g>
+      <line x1="211" y1="104" x2="151" y2="246" stroke="rgba(108,99,255,0.17)" stroke-width="1"/>
+      <line x1="211" y1="104" x2="276" y2="246" stroke="rgba(108,99,255,0.17)" stroke-width="1"/>
+      <line x1="144" y1="268" x2="276" y2="268" stroke="rgba(108,99,255,0.1)" stroke-width="1" stroke-dasharray="4,5"/>
+      <circle cx="210" cy="210" r="22" fill="rgba(108,99,255,0.12)" stroke="rgba(108,99,255,0.35)" stroke-width="1"/>
+      <text x="210" y="215" font-family="Syne,sans-serif" font-size="8.5" fill="rgba(200,197,255,0.85)" text-anchor="middle" font-weight="700">FO</text>
+    </svg>
+  </div>
+
+</div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="mitem">Analytics Translator</span>
+    <span class="mitem">Business Analysis</span>
+    <span class="mitem">Product Owner</span>
+    <span class="mitem">Stakeholder Management</span>
+    <span class="mitem">Scrum &amp; Agile</span>
+    <span class="mitem">Data Storytelling</span>
+    <span class="mitem">OKRs &amp; KPIs</span>
+    <span class="mitem">User Stories</span>
+    <span class="mitem">Project Management</span>
+    <span class="mitem">Functional Analysis</span>
+    <span class="mitem">LATAM Airlines</span>
+    <span class="mitem">Backlog Prioritization</span>
+    <span class="mitem">Analytics Translator</span>
+    <span class="mitem">Business Analysis</span>
+    <span class="mitem">Product Owner</span>
+    <span class="mitem">Stakeholder Management</span>
+    <span class="mitem">Scrum &amp; Agile</span>
+    <span class="mitem">Data Storytelling</span>
+    <span class="mitem">OKRs &amp; KPIs</span>
+    <span class="mitem">User Stories</span>
+    <span class="mitem">Project Management</span>
+    <span class="mitem">Functional Analysis</span>
+    <span class="mitem">LATAM Airlines</span>
+    <span class="mitem">Backlog Prioritization</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-label">Sobre mí</div>
+      <h2 class="sec-title">Negocio, datos y<br>tecnología. <span class="dim">Todo junto.</span></h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="about-p">
+          Soy un <strong>perfil híbrido entre Analytics Translator, Product Owner y Analista Funcional</strong> con más de 4 años trabajando en el mundo IT. Me muevo cómodo en la intersección entre lo estratégico y lo técnico.
+        </p>
+        <p class="about-p">
+          Actualmente curso la <strong>Licenciatura en Sistemas de Información en la UBA</strong>. Ese background académico combinado con la experiencia real en empresas de producto y datos me da una visión completa del ciclo digital — desde el problema de negocio hasta la entrega técnica.
+        </p>
+        <p class="about-p">
+          Mi diferencial es poder <strong>entender profundamente el problema de negocio</strong>, traducirlo al equipo técnico con precisión, y devolver los resultados al negocio en términos que generen acción real. Ese puente es donde trabajo mejor y donde más impacto genero.
+        </p>
+
+        <div class="pillars">
+          <div class="pillar">
+            <div class="p-icon">🎯</div>
+            <div>
+              <h4>Orientado a impacto medible</h4>
+              <p>Cada iniciativa que impulso tiene métricas claras desde el inicio. OKRs y KPIs no son un formalismo — son la forma de saber si estamos generando valor real.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="p-icon">🔗</div>
+            <div>
+              <h4>El puente entre mundos</h4>
+              <p>Traduzco lo técnico al negocio y lo del negocio al equipo de datos. Elimino la fricción de comunicación que frena la mayoría de los proyectos.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="p-icon">⚡</div>
+            <div>
+              <h4>Mentalidad de builder</h4>
+              <p>No solo gestiono — me involucro. Tengo background técnico real (React, JS, Python) que me permite entender qué es posible y hablar el mismo idioma que los equipos de desarrollo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-right reveal d2">
+        <!-- Educación -->
+        <div class="card-block at">
+          <div class="card-label">Educación</div>
+          <div class="edu-item">
+            <div class="edu-school">Universidad de Buenos Aires</div>
+            <div class="edu-degree">Lic. en Sistemas de Información de las Organizaciones</div>
+            <div class="edu-period">2020 – 2025 · En curso</div>
+          </div>
+          <hr class="edu-sep">
+          <div class="edu-item">
+            <div class="edu-school">Instituto La Salle Florida</div>
+            <div class="edu-degree">Técnico Electromecánico</div>
+            <div class="edu-period">2012 – 2018 · Graduado</div>
+          </div>
+        </div>
+
+        <!-- Certificaciones -->
+        <div class="card-block">
+          <div class="card-label">Certificaciones</div>
+          <div class="cert-grid">
+            <div class="cert-item">
+              <div class="cert-bul cp">🏆</div>
+              <div>
+                <div class="cert-name">Product Owner · Gestión ágil de productos</div>
+                <div class="cert-org">UTN FRBA</div>
+              </div>
+              <div class="cert-yr">Abr 2025</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-bul cg">🐍</div>
+              <div>
+                <div class="cert-name">Python 3 — Nivel Inicial</div>
+                <div class="cert-org">UTN FRBA</div>
+              </div>
+              <div class="cert-yr">Oct 2024</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-bul ca">⚛️</div>
+              <div>
+                <div class="cert-name">React JS</div>
+                <div class="cert-org">Coderhouse</div>
+              </div>
+              <div class="cert-yr">Sep 2022</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-bul cp">🟨</div>
+              <div>
+                <div class="cert-name">JavaScript</div>
+                <div class="cert-org">Coderhouse</div>
+              </div>
+              <div class="cert-yr">Jul 2022</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-bul cg">🌐</div>
+              <div>
+                <div class="cert-name">Desarrollo Web</div>
+                <div class="cert-org">Coderhouse</div>
+              </div>
+              <div class="cert-yr">May 2022</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-label">Experiencia</div>
+      <h2 class="sec-title">Trayectoria<br><span class="dim">&amp; recorrido.</span></h2>
+    </div>
+
+    <div class="timeline">
+
+      <!-- Acid Labs -->
+      <div class="tl-item reveal">
+        <div class="tl-dot gd"></div>
+        <div class="tl-head">
+          <span class="tl-company">Acid Labs</span>
+          <span class="tl-pill">Jun 2025 – Actualidad</span>
+          <span class="tl-pill cur">● Actual</span>
+        </div>
+        <div class="tl-role">Analytics Translator · Jornada completa · Remoto</div>
+        <div class="tl-desc">
+          Como puente estratégico entre la experiencia técnica y el negocio, maximizo el impacto de las iniciativas de analítica avanzada dentro del cliente <strong style="color:var(--text);font-weight:500">LATAM Airlines</strong>. Traduzco problemas de negocio en soluciones analíticas claras y accionables, asegurando que los resultados sean comprendidos y aprovechados por todos los stakeholders.
+        </div>
+        <div class="tl-bullets">
+          <div class="tl-bullet">Diseño, priorización y planificación de iniciativas de análisis enfocadas en las palancas clave de valor del negocio.</div>
+          <div class="tl-bullet">Ejecución de pilotos para validar hipótesis y demostrar el valor de las soluciones antes de escalarlas.</div>
+          <div class="tl-bullet">Traducción de análisis complejos en insights claros y aplicables que impulsan la toma de decisiones ejecutiva.</div>
+          <div class="tl-bullet">Definición e implementación de métricas estratégicas (OKRs y KPIs) para medir el éxito e impacto de cada iniciativa.</div>
+          <div class="tl-bullet">Colaboración con equipos multidisciplinarios para garantizar alineación entre objetivos de negocio y soluciones técnicas.</div>
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">Analytics Translation</span>
+          <span class="tl-tag">OKRs / KPIs</span>
+          <span class="tl-tag">LATAM Airlines</span>
+          <span class="tl-tag">Stakeholder Management</span>
+          <span class="tl-tag">Roadmapping</span>
+          <span class="tl-tag">Data Storytelling</span>
+          <span class="tl-tag">Pilotos &amp; Validación</span>
+        </div>
+      </div>
+
+      <!-- Datalytics -->
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-head">
+          <span class="tl-company">Datalytics</span>
+          <span class="tl-pill">May 2024 – Jun 2025</span>
+          <span class="tl-pill">1 año 2 meses</span>
+        </div>
+        <div class="tl-role">Business Analytics Translator · Jornada completa · Remoto · Buenos Aires, AR</div>
+        <div class="tl-desc">
+          Transformé datos complejos en estrategias claras que impulsaron decisiones informadas. Identifiqué necesidades de negocio, analicé procesos, definí soluciones y documenté requisitos clave para garantizar resultados alineados con los objetivos de los stakeholders.
+        </div>
+        <div class="tl-bullets">
+          <div class="tl-bullet">Redacción de User Stories y documentación funcional detallada para equipos de desarrollo.</div>
+          <div class="tl-bullet">Gestión de backlog y validación de tareas (QA) asegurando calidad en cada entregable.</div>
+          <div class="tl-bullet">Participación activa en ceremonias Scrum: daily, planning, refinement y retrospectives.</div>
+          <div class="tl-bullet">Creación de cronogramas, análisis de riesgos y seguimiento de proyectos end-to-end.</div>
+          <div class="tl-bullet">Traducción de datos en insights accionables, conectando análisis técnico con estrategias creativas de negocio.</div>
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">Business Analysis</span>
+          <span class="tl-tag">User Stories</span>
+          <span class="tl-tag">Scrum</span>
+          <span class="tl-tag">Backlog Management</span>
+          <span class="tl-tag">QA</span>
+          <span class="tl-tag">Risk Analysis</span>
+          <span class="tl-tag">Cronogramas</span>
+        </div>
+      </div>
+
+      <!-- Lubee -->
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-head">
+          <span class="tl-company">Lubee</span>
+          <span class="tl-pill">Ago 2023 – May 2024</span>
+          <span class="tl-pill">10 meses</span>
+        </div>
+        <div class="tl-role">Project Manager &amp; Functional Analyst · Jornada completa · Remoto · Argentina</div>
+        <div class="tl-desc">
+          Actué como enlace entre stakeholders y equipos de desarrollo, recopilando requisitos, analizando procesos y documentando soluciones integrales. Lideré la planificación, seguimiento y control de proyectos, coordinando equipos multifuncionales para garantizar entregas de alta calidad en tiempo y forma.
+        </div>
+        <div class="tl-bullets">
+          <div class="tl-bullet">Facilitación de ceremonias Scrum: dailys, planning y retrospectivas con múltiples equipos simultáneos.</div>
+          <div class="tl-bullet">Gestión y priorización del backlog alineado con los objetivos estratégicos del cliente.</div>
+          <div class="tl-bullet">Definición de user stories, creación de diagramas de flujo y documentación funcional exhaustiva.</div>
+          <div class="tl-bullet">Gestión de riesgos y validación de entregables para cumplir las expectativas del negocio.</div>
+          <div class="tl-bullet">Nexo clave entre clientes y equipos técnicos, promoviendo comunicación clara y alineación continua.</div>
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">Project Management</span>
+          <span class="tl-tag">Functional Analysis</span>
+          <span class="tl-tag">Scrum</span>
+          <span class="tl-tag">User Stories</span>
+          <span class="tl-tag">Flowcharts</span>
+          <span class="tl-tag">Documentación</span>
+          <span class="tl-tag">Gestión de Riesgos</span>
+        </div>
+      </div>
+
+      <!-- Exemax -->
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-head">
+          <span class="tl-company">Exemax</span>
+          <span class="tl-pill">Abr 2023 – Ago 2023</span>
+          <span class="tl-pill">5 meses</span>
+        </div>
+        <div class="tl-role">Consultor Funcional &amp; Project Manager · Híbrido · Argentina</div>
+        <div class="tl-desc">
+          Primera experiencia formal en IT como consultor funcional y PM. Trabajé en la implementación de Odoo en distintos modelos de negocio, siendo responsable del relevamiento de requerimientos, la documentación funcional y la capacitación de los usuarios finales.
+        </div>
+        <div class="tl-bullets">
+          <div class="tl-bullet">Escritura de User Stories y documentación de relevamientos funcionales para cada cliente.</div>
+          <div class="tl-bullet">Capacitación de módulos de Odoo a clientes con distintos niveles de madurez tecnológica.</div>
+          <div class="tl-bullet">Implementación de Odoo adaptada a distintos modelos de negocio: retail, servicios y manufactura.</div>
+        </div>
+        <div class="tl-tags">
+          <span class="tl-tag">Odoo ERP</span>
+          <span class="tl-tag">Functional Consulting</span>
+          <span class="tl-tag">ERP Implementation</span>
+          <span class="tl-tag">User Training</span>
+          <span class="tl-tag">Requirements Gathering</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-label">Skills</div>
+      <h2 class="sec-title">Capacidades<br><span class="dim">&amp; herramientas.</span></h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="sk-card reveal">
+        <div class="sk-icon">📊</div>
+        <div class="sk-title">Analytics Translation</div>
+        <div class="sk-desc">Convertir análisis técnicos complejos en narrativas claras que mueven decisiones ejecutivas.</div>
+        <div class="sk-pills">
+          <span class="sk-pill">Data Storytelling</span>
+          <span class="sk-pill">Insights accionables</span>
+          <span class="sk-pill">OKRs / KPIs</span>
+          <span class="sk-pill">Executive Reporting</span>
+          <span class="sk-pill">Hypothesis Testing</span>
+          <span class="sk-pill">Piloting</span>
+        </div>
+      </div>
+      <div class="sk-card reveal d1">
+        <div class="sk-icon">🎯</div>
+        <div class="sk-title">Product &amp; Project Mgmt</div>
+        <div class="sk-desc">Gestión integral del ciclo de vida del producto y los proyectos, de la estrategia a la entrega.</div>
+        <div class="sk-pills">
+          <span class="sk-pill">Backlog Management</span>
+          <span class="sk-pill">Roadmapping</span>
+          <span class="sk-pill">User Stories</span>
+          <span class="sk-pill">Risk Analysis</span>
+          <span class="sk-pill">Stakeholder Mgmt</span>
+          <span class="sk-pill">QA &amp; Validation</span>
+        </div>
+      </div>
+      <div class="sk-card reveal d2">
+        <div class="sk-icon">⚡</div>
+        <div class="sk-title">Agile &amp; Frameworks</div>
+        <div class="sk-desc">Metodologías ágiles aplicadas al desarrollo de software y gestión de equipos de producto.</div>
+        <div class="sk-pills">
+          <span class="sk-pill">Scrum</span>
+          <span class="sk-pill">Kanban</span>
+          <span class="sk-pill">Sprint Planning</span>
+          <span class="sk-pill">Retrospectives</span>
+          <span class="sk-pill">Refinement</span>
+          <span class="sk-pill">Daily Standups</span>
+        </div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-icon">🔍</div>
+        <div class="sk-title">Análisis Funcional</div>
+        <div class="sk-desc">Relevamiento de procesos, documentación y traducción de necesidades en requerimientos técnicos claros.</div>
+        <div class="sk-pills">
+          <span class="sk-pill">Requirements Gathering</span>
+          <span class="sk-pill">Flowcharts</span>
+          <span class="sk-pill">Process Mapping</span>
+          <span class="sk-pill">Functional Docs</span>
+          <span class="sk-pill">Use Cases</span>
+          <span class="sk-pill">Gap Analysis</span>
+        </div>
+      </div>
+      <div class="sk-card reveal d1">
+        <div class="sk-icon">🛠️</div>
+        <div class="sk-title">Herramientas &amp; Stack</div>
+        <div class="sk-desc">Stack completo de herramientas para producto, gestión, análisis y documentación de iniciativas digitales.</div>
+        <div class="sk-pills">
+          <span class="sk-pill">Jira</span>
+          <span class="sk-pill">Confluence</span>
+          <span class="sk-pill">Figma</span>
+          <span class="sk-pill">Notion</span>
+          <span class="sk-pill">Miro</span>
+          <span class="sk-pill">Power BI</span>
+          <span class="sk-pill">SQL</span>
+          <span class="sk-pill">Odoo</span>
+        </div>
+      </div>
+      <div class="sk-card reveal d2">
+        <div class="sk-icon">💻</div>
+        <div class="sk-title">Background Técnico</div>
+        <div class="sk-desc">Base técnica real que me permite hablar el mismo idioma que los equipos de desarrollo y datos.</div>
+        <div class="sk-pills">
+          <span class="sk-pill">Python</span>
+          <span class="sk-pill">JavaScript</span>
+          <span class="sk-pill">React JS</span>
+          <span class="sk-pill">HTML / CSS</span>
+          <span class="sk-pill">SQL</span>
+          <span class="sk-pill">Excel Avanzado</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach">
+  <div class="container">
+    <div class="sec-header reveal">
+      <div class="sec-label">Mi enfoque</div>
+      <h2 class="sec-title">Cómo trabajo<br><span class="dim">y cómo pienso.</span></h2>
+    </div>
+    <div class="approach-grid reveal">
+      <div class="ap-step">
+        <div class="ap-num">01</div>
+        <div class="ap-title">Entender el problema real</div>
+        <div class="ap-desc">Antes de proponer cualquier solución, invierto tiempo en entender qué problema está tratando de resolver el negocio. El síntoma y la causa raíz no siempre son lo mismo.</div>
+      </div>
+      <div class="ap-step">
+        <div class="ap-num">02</div>
+        <div class="ap-title">Traducir en ambas direcciones</div>
+        <div class="ap-desc">Mi rol es eliminar el ruido entre el negocio y la tecnología. Hablo los dos idiomas y me aseguro de que cada parte entienda a la otra sin fricciones innecesarias.</div>
+      </div>
+      <div class="ap-step">
+        <div class="ap-num">03</div>
+        <div class="ap-title">Pilotar antes de escalar</div>
+        <div class="ap-desc">No escalo lo que no validé. Diseño pilotos pequeños para probar hipótesis rápido, aprender barato y tomar decisiones con datos antes de comprometer recursos.</div>
+      </div>
+      <div class="ap-step">
+        <div class="ap-num">04</div>
+        <div class="ap-title">Medir lo que importa</div>
+        <div class="ap-desc">Defino métricas desde el inicio. Un proyecto sin métricas claras es solo actividad. Lo que importa es el impacto, y ese impacto tiene que poder medirse.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner reveal">
+      <div class="sec-label" style="justify-content:center">Contacto</div>
+      <h2 class="contact-h">
+        Construyamos<br><span class="grad-text">algo juntos.</span>
+      </h2>
+      <p class="contact-sub">
+        Estoy abierto a nuevas oportunidades, proyectos interesantes y conversaciones que valgan la pena. Cualquier cosa que tenga que ver con producto, datos y negocio me interesa. No tardés en escribir.
+      </p>
+      <div class="contact-cards">
+        <a href="mailto:francisco.obaya@gmail.com" class="cc">
+          <svg viewBox="0 0 17 17" fill="none"><rect x="1" y="2.5" width="15" height="12" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 5l7.5 5L16 5" stroke="currentColor" stroke-width="1.4"/></svg>
+          francisco.obaya@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/francisco-obaya-190142191/" target="_blank" rel="noopener" class="cc">
+          <svg viewBox="0 0 17 17" fill="none"><rect x="1" y="1" width="15" height="15" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M4.5 6.5v6M4.5 4.5v.01M8.5 12.5V9a1.5 1.5 0 013 0v3.5M8.5 9v3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          LinkedIn · francisco-obaya
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-l">Diseñado &amp; construido por <strong>Francisco Obaya</strong> · 2025</div>
+  <div class="foot-r">
+    <a href="#top" class="foot-link">Inicio</a>
+    <a href="#about" class="foot-link">Sobre mí</a>
+    <a href="#experience" class="foot-link">Experiencia</a>
+    <a href="#contact" class="foot-link">Contacto</a>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(
+    entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }),
+    {threshold:0.07, rootMargin:'0px 0px -30px 0px'}
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').style.background =
+      window.scrollY > 50 ? 'rgba(10,10,15,0.97)' : 'rgba(10,10,15,0.82)';
+  });
+
+  const secEls = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    secEls.forEach(s => { if(window.scrollY >= s.offsetTop - 130) cur = s.id; });
+    navAs.forEach(a => {
+      a.style.color = (a.getAttribute('href') === '#'+cur) ? 'var(--text)' : '';
+    });
+  });
+
+  function toggleMenu() {
+    const nl = document.getElementById('navLinks');
+    const open = nl.style.display === 'flex';
+    if(open) {
+      nl.style.display = '';
+    } else {
+      nl.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:rgba(10,10,15,0.98);border-bottom:1px solid rgba(255,255,255,0.07);padding:24px;gap:20px;z-index:300;';
+    }
+  }
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    a.addEventListener('click', () => {
+      if(window.innerWidth < 720) document.getElementById('navLinks').style.display = '';
+    });
+  });
+</script>
+</body>
+</html>
